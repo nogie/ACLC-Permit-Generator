@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="icon" type="text/css" href="{{ url_for('static', filename='images/favicon.png') }}">
+	  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+	  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/animate.min.css')}}">
+	  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/paper-dashboard.css')}}">
+	  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/demo.css')}}">
+	  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/themify-icons.css')}}">
+	  <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
+	  <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+		<title> Add Students </title>
+	</head>
+<body>
+	<div class="wrapper">
+		<div class="sidebar" data-background-color="white" data-active-color="danger">
+  		<div class="sidebar-wrapper">
+        <div class="logo">
+          <a href="/" class="simple-text"> ACLC </a>
+        </div>
+        <ul class="nav">
+          <li>
+            <a href="/">
+              <i class="ti-panel"></i>
+              	<p>Dashboard</p>
+            </a>
+          </li>
+          <li class="active">
+            <a href="/addStudents">
+              <i class="ti-user"></i>
+                <p>Add Students</p>
+            </a>
+          </li>
+          <li>
+            <a href="/studentList">
+              <i class="ti-view-list-alt"></i>
+                <p>Student List</p>
+            </a>
+          </li>
+          <li>
+            <a href="maps.html">
+              <i class="ti-map"></i>
+                <p>Maps</p>
+            </a>
+          </li>
+					<li class="active-pro">
+            <a href="/logout">
+              <i class="ti-power-off"></i>
+                <p>Logout</p>
+              </a>
+          </li>
+      	</ul>
+    	</div>
+    </div>
+
+    <div class="main-panel">
+			<nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar bar1"></span>
+              <span class="icon-bar bar2"></span>
+              <span class="icon-bar bar3"></span>
+          	</button>
+            <a class="navbar-brand" href="/addStudents">Add Student</a>
+          </div>
+          <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="ti-panel"></i>
+										<p>Stats</p>
+              	</a>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="ti-bell"></i>
+                    <p class="notification">5</p>
+											<p>Notifications</p>
+												<b class="caret"></b>
+                </a>
+	              <ul class="dropdown-menu">
+	                <li><a href="#">Notification 1</a></li>
+	                <li><a href="#">Notification 2</a></li>
+	                <li><a href="#">Notification 3</a></li>
+	                <li><a href="#">Notification 4</a></li>
+	                <li><a href="#">Another notification</a></li>
+	              </ul>
+              </li>
+							<li>
+                <a href="#">
+									<i class="ti-settings"></i>
+										<p>Settings</p>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-8">
+              <div class="card">
+                <div class="header">
+                  <h4 class="title">Student Information</h4>
+                </div>
+              	<div class="content">
+                  <form method="POST">
+                    <div class="row">
+                    	<div class="col-md-6">
+                        <div class="form-group">
+                          <label>Name</label>
+                          <input type="text" id="name" class="form-control border-input" placeholder="Full name">
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Address</label>
+                          <input type="text" class="form-control border-input" id="address" placeholder="Home Address">
+                        </div>
+                    	</div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Course</label>
+                            <select class="form-control border-input" id="course">
+                  					{% for data in datas %}
+                            	<option value="{{ data[0] }}">{{ data[1] }}</option>
+                      			{% endfor %}
+                            </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Contact</label>
+                            <input type="text" class="form-control border-input" placeholder="Contact" maxlength="11" id="contact" onkeydown="validateNumber(event)">
+                        </div>
+                        <p id="contactError"></p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                        	<label>Age</label>
+                            <input type="number" class="form-control border-input" id="age" placeholder="Age">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label>Year</label>
+                          <select class="form-control border-input" id="year">
+                            <option>1st</option>
+                            <option>2nd</option>
+                            <option>3rd</option>
+                            <option>4th</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label>Status</label>
+                            <select class='form-control border-input' id="status">
+                              <option>Single</option>
+                              <option>Married</option>
+                              <option>Widow</option>
+                            </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                        	<label>Email</label>
+                            <input type="email" id="email" class="form-control border-input" placeholder="Email">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label>Gender</label>
+                            <select class="form-control border-input" id="gender">
+                            	<option>Male</option>
+                            	<option>Female</option>
+                            </select>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label>Postal Code</label>
+                          	<input type="number" class="form-control border-input" id="postal" placeholder="ZIP Code">
+                        </div>
+                      </div>
+               	 		</div>
+                    <div class="text-center">
+                      <input type="submit" class="btn btn-info btn-fill btn-wd" id="addStudent" value="Add Student">
+                    </div>
+                    <div class="clearfix"></div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="footer">
+        <div class="container-fluid">
+        	<nav class="pull-left">
+            <ul>
+            	<li>
+              	<span>Aclc Butuan</span>
+              </li>
+            </ul>
+          </nav>
+				<div class="copyright pull-right">
+          &copy; <script>document.write(new Date().getFullYear())</script> 
+        </div>
+      	</div>
+      </footer>
+  	</div>
+	</div>
+</body>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.10.2.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-checkbox-radio.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/chartist.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/paper-dashboard.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/demo.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-notify.js') }}"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#addStudent').click(function(e) {
+		e.preventDefault();
+		var name = $('#name').val();
+		var email = $('#email').val();
+		var gender = $('#gender').val();
+    var course = $('#course').val();
+		var year = $('#year').val();
+		var age = $('#age').val();
+		var address = $('#address').val();
+		var contact = $('#contact').val();
+		var status = $('#status').val();
+		var postal = $('#postal').val();
+		$.ajax({
+			url: '/insertStudent',
+			type: 'POST',
+			data: {name:name, email:email, gender:gender, course:course, year:year, age:age, address:address, contact:contact, status:status, postal:postal},
+			success: function(data) {
+				alert(data)
+				location.reload();
+			}
+		});
+	});
+});
+function validateNumber(evt) {
+  var e = evt || window.event;
+  var key = e.keyCode || e.which;
+  if (!e.shiftKey && !e.altKey && !e.ctrlKey &&
+    key >= 48 && key <= 57 ||
+    key >= 96 && key <= 105 ||
+    key == 8 || key == 9 || key == 13 ||
+    key == 35 || key == 36 ||
+    key == 37 || key == 39 ||
+    key == 46 || key == 45 ||
+    key == 190 || key == 188 || 
+  	key == 109 || key == 110) {
+  	$('#contactError').fadeOut(1500)
+  }
+  else {
+  	$('#contactError').html('<p class="text-danger"> Letters are now allowed! <p>');
+  	$('#contact').val('')
+  }
+}
+</script>
+</html>
